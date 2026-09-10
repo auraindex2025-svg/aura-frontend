@@ -533,13 +533,9 @@ async function doVerify(){
       result.innerHTML=stateBlock('','red',t('nf_lbl'),t('nf_msg'),t('nf_sub'),true);
     } else {
       var row=data[0];
-      // La view v_certificates_public solo devuelve certified y pending_anchor.
-      // is_revoked=true dentro de certified → A3.
-      if(row.is_revoked){
-        result.innerHTML=renderCert(Object.assign({},row,{status:'revoked'}));
-      } else {
-        result.innerHTML=renderCert(row);
-      }
+      // Certificado encontrado → redirigir a /certificate/:case_id
+      // verify.html nunca renderiza el certificado completo
+      window.location.href='/certificate/'+row.case_id;
     }
   } catch(err){
     result.innerHTML=stateBlock('','red',t('err_lbl'),t('err_msg'),err.message,false);
