@@ -513,11 +513,6 @@ async function doVerify(){
   btn.disabled=true;
   result.innerHTML='<div class="state-loading"><div class="spinner"></div>'+t('loading')+'</div>';
   try{
-    var u=new URL(window.location.href);
-    u.searchParams.set('c',caseId);
-    history.replaceState(null,'',u.toString());
-  }catch(e){}
-  try{
     // ── Paso 2: usar rpc_get_certificate en lugar de /rest/v1/submissions ──
     // La RPC solo expone certified + pending_anchor (view pública).
     // 0 filas = no encontrado o estado no público → C2.
@@ -552,9 +547,11 @@ async function doVerify(){
 }
 
 (function(){
-  var param=new URLSearchParams(window.location.search).get('c');
+  // Auto-verify ONLY when case_id comes from the URL path (/verify/AURA-XXXX)
+  // Never from ?c= — that param was added by the old replaceState and causes
+  // the result to auto-render on every page load.
   var pathId=window.location.pathname.split('/').pop();
-  var auto=param||(pathId&&pathId.startsWith('AURA-')?pathId:null);
+  var auto=(pathId&&pathId.startsWith('AURA-'))?pathId:null;
   if(auto){
     var varPart=auto.replace(/^AURA-/i,'').replace(/^[0-9]{4}-/,'');
     var parts=varPart.split('-');
