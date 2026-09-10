@@ -1844,7 +1844,7 @@ function openPrintCert(size) {
     artwork_url:   d.artwork_url || (window._realDataLoaded ? '' : (typeof ARTWORK_URL !== 'undefined' ? ARTWORK_URL : '')),
     size:          size,
   });
-  window.open('aura-certificate-print.html?' + params.toString(), '_blank');
+  window.open('/print?' + params.toString(), '_blank');
 }
 
 function setState(v){ currentState=v; render(); }
