@@ -121,6 +121,8 @@ img{display:block;max-width:100%}
 .chain-link:hover{opacity:.7}
 .cert-note{padding:12px 20px 16px;border-top:1px solid var(--linen);font-size:11px;color:var(--muted-fg);line-height:1.6}
 .cert-note strong{color:var(--fg)}
+.cert-view-btn{display:flex;align-items:center;justify-content:center;margin:0 20px 20px;padding:11px 20px;background:var(--fg);color:var(--primary-fg);border-radius:var(--r);font-size:13px;font-weight:600;text-decoration:none;letter-spacing:-.01em;transition:opacity var(--fast) ease}
+.cert-view-btn:hover{opacity:.85}
 
 .info-overlay{position:fixed;inset:0;z-index:200;background:rgba(28,29,31,.5);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:1.5rem;animation:overlayIn var(--fast) var(--ease) both}
 @keyframes overlayIn{from{opacity:0}to{opacity:1}}
@@ -270,6 +272,7 @@ const TX = {
     anchor_pend:'Pending \u00b7 within 10 days of issue',
     polygonscan:'View on Polygonscan \u2192',
     l_issued:'Issued', l_ref:'Reference', l_ruleset:'Ruleset', l_anchor:'Blockchain anchor',
+    view_cert:'View full certificate →',
     cert_note:'<strong>About this certificate.</strong> The Aura level reflects a human audit against the AURA Motor Forense protocol. It includes the level assigned when the audit was requested and confirmed by the auditor. The Confidence Grade indicates the strength of the supporting evidence. The blockchain anchor makes this result permanently verifiable.',
   },
   es:{
@@ -309,6 +312,7 @@ const TX = {
     anchor_pend:'Pendiente \u00b7 en los pr\u00f3ximos 10 d\u00edas',
     polygonscan:'Ver en Polygonscan \u2192',
     l_issued:'Emitido', l_ref:'Referencia', l_ruleset:'Ruleset', l_anchor:'Anclaje blockchain',
+    view_cert:'Ver certificado completo →',
     cert_note:'<strong>Sobre este certificado.</strong> El nivel Aura refleja el resultado de una auditor\u00eda humana seg\u00fan el protocolo AURA Motor Forense. Incluye el nivel asignado al solicitar la auditor\u00eda y confirmado por el auditor. El Confidence Grade indica la solidez de la evidencia. El anclaje blockchain hace este resultado verificable de forma permanente.',
   }
 };
@@ -482,6 +486,7 @@ function renderCert(d){
     +'</div>'
     +'<div class="cert-chain"><span class="chain-label">'+(polyUrl?t('chain_ok'):t('chain_pending'))+'</span>'+chainRow+'</div>'
     +'<div class="cert-note">'+t('cert_note')+'</div>'
+    +'<a class="cert-view-btn" href="/certificate/'+d.case_id+'" target="_blank">'+t('view_cert')+'</a>'
     +'</div>';
 }
 
