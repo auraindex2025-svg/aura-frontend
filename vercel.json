@@ -1,19 +1,54 @@
 {
   "rewrites": [
-    { "source": "/verify", "destination": "/aura-verify.html" },
-    { "source": "/verify/:case_id", "destination": "/aura-verify.html" },
-    { "source": "/certificate/:case_id", "destination": "/aura-certificate.html" },
-    { "source": "/print", "destination": "/aura-certificate-print.html" },
-    { "source": "/payment/success", "destination": "/aura-payment-success.html" },
-    { "source": "/payment/cancelled", "destination": "/aura-payment-cancelled.html" }
+    {
+      "source": "/verify",
+      "destination": "/aura-verify.html"
+    },
+    {
+      "source": "/verify/:case_id",
+      "destination": "/aura-verify.html"
+    },
+    {
+      "source": "/certificate/:case_id",
+      "destination": "/aura-certificate.html"
+    },
+    {
+      "source": "/print",
+      "destination": "/aura-certificate-print.html"
+    },
+    {
+      "source": "/payment/success",
+      "destination": "/aura-payment-success.html"
+    },
+    {
+      "source": "/payment/cancelled",
+      "destination": "/aura-payment-cancelled.html"
+    },
+    {
+      "source": "/submit",
+      "destination": "/aura-artist-intake.html"
+    },
+    {
+      "source": "/institutional-intake",
+      "destination": "/aura-institution-intake.html"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
       ]
     }
   ]
