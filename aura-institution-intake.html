@@ -661,24 +661,7 @@ img,canvas,svg{max-width:100%}
 
   .summary{padding:1.25rem}
   .summary-row{grid-template-columns:1fr;gap:0}
-  .summary{
-  background:var(--card);border-radius:var(--radius-lg);
-  border:1px solid var(--border);margin-bottom:1rem;overflow:hidden;
-}
-.summary-head{
-  font-size:var(--text-overline);font-weight:700;letter-spacing:.07em;
-  text-transform:uppercase;color:var(--muted-foreground);
-  padding:.875rem 1.25rem .625rem;border-bottom:1px solid var(--border);
-}
-.summary-row{
-  display:grid;grid-template-columns:1fr 1.5fr;gap:.25rem .75rem;
-  padding:.5rem 1.25rem;border-bottom:1px solid var(--border);align-items:baseline;
-}
-.summary-row:last-child{border-bottom:none}
-.summary-key{font-size:var(--text-small);color:var(--muted-foreground);padding:.125rem 0}
-.summary-val{font-size:var(--text-p);color:var(--foreground);padding:.125rem 0;word-break:break-word}
-.summary-val.empty{color:var(--muted-foreground);font-style:italic}
-.invite-box{padding:1.25rem}
+  .invite-box{padding:1.25rem}
   .invite-url{font-size:11px}
   .invite-actions .btn{width:100%;justify-content:center}
   .sent{padding:2rem 0 1.5rem}
@@ -717,6 +700,25 @@ img,canvas,svg{max-width:100%}
     animation-delay:0ms!important;transition-duration:0.01ms!important;
   }
 }
+
+/* ── Summary / Review ──────────────────────────────────────────────────── */
+.summary{
+  background:var(--card);border-radius:var(--radius-lg);
+  border:1px solid var(--border);margin-bottom:1rem;overflow:hidden;
+}
+.summary-head{
+  font-size:var(--text-overline);font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted-foreground);
+  padding:.875rem 1.25rem .625rem;border-bottom:1px solid var(--border);
+}
+.summary-row{
+  display:grid;grid-template-columns:1fr 1.5fr;gap:.25rem .75rem;
+  padding:.5rem 1.25rem;border-bottom:1px solid var(--border);align-items:baseline;
+}
+.summary-row:last-child{border-bottom:none}
+.summary-key{font-size:var(--text-small);color:var(--muted-foreground);padding:.125rem 0}
+.summary-val{font-size:var(--text-p);color:var(--foreground);padding:.125rem 0;word-break:break-word}
+.summary-val.empty{color:var(--muted-foreground);font-style:italic}
 </style>
 </head>
 <body data-product="certificate">
