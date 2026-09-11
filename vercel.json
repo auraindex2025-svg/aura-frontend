@@ -3,7 +3,9 @@
     { "source": "/verify", "destination": "/aura-verify.html" },
     { "source": "/verify/:case_id", "destination": "/aura-verify.html" },
     { "source": "/certificate/:case_id", "destination": "/aura-certificate.html" },
-    { "source": "/print", "destination": "/aura-certificate-print.html" }
+    { "source": "/print", "destination": "/aura-certificate-print.html" },
+    { "source": "/payment/success", "destination": "/aura-payment-success.html" },
+    { "source": "/payment/cancelled", "destination": "/aura-payment-cancelled.html" }
   ],
   "headers": [
     {
