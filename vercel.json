@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/(.*)", "has": [{ "type": "host", "value": "www.auracertificate.art" }], "destination": "https://auracertificate.art/$1", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/verify", "destination": "/aura-verify.html" },
     { "source": "/verify/:case_id", "destination": "/aura-verify.html" },
