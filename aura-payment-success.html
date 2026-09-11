@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Payment confirmed — AURA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,200;1,9..40,400&family=DM+Mono:wght@300;400;500&family=Monsieur+La+Doulaise&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1C1D1F;--ash:#6E6560;--linen:#E8E3DA;
+  --cream:#F5F0E8;--white:#FAFAF8;--paper:#FFFAF3;
+  --rust:#D75A36;--red:#D32A37;--green:#2C5F3E;
+  --amber:#C47A10;--border:#D5CFC6;
+  --bg:var(--cream);--fg:var(--ink);
+  --card:var(--white);
+  --sans:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+  --accent:'Monsieur La Doulaise',cursive;
+  --r:.5rem;--rl:calc(var(--r)*1.5);--rxl:calc(var(--r)*2);--r2xl:2.5rem;--rpill:9999px;
+  --ease:cubic-bezier(.16,1,.3,1);--fast:180ms;--base:300ms;--slow:500ms;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-size:15px;line-height:1.6;color:var(--fg);background:var(--bg);-webkit-font-smoothing:antialiased;min-height:100vh}
+::selection{background:var(--ink);color:var(--cream)}
+
+/* ── Isotipo bleeding ─────────────────────────────────────────────────── */
+.brand-mark{position:fixed;top:6vh;left:-26vw;width:96vw;max-width:1180px;z-index:0;pointer-events:none;user-select:none}
+.brand-mark svg{display:block;width:100%;height:auto;fill:var(--paper)}
+@media(max-width:860px){.brand-mark{top:10vh;left:-48vw;width:130vw}}
+
+/* ── App shell ────────────────────────────────────────────────────────── */
+.app{min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:1}
+
+/* ── Header ───────────────────────────────────────────────────────────── */
+.header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.5rem 1.75rem 1rem;position:relative;z-index:60}
+.header-logo{display:flex;align-items:center;gap:10px}
+.logo-svg{display:block;height:22px;width:auto;fill:var(--ink);stroke:var(--ink)}
+.logo-sub{font-size:11px;font-weight:400;line-height:1.25;color:var(--ash);border-left:1px solid var(--border);padding-left:10px}
+.header-badge{display:inline-flex;align-items:center;border:.75px solid var(--ink);border-radius:var(--rpill);padding:4px 12px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+
+/* ── Main ─────────────────────────────────────────────────────────────── */
+.main{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem 1.75rem;position:relative;z-index:1}
+.container{max-width:520px;width:100%;margin:0 auto}
+
+/* ── Card ─────────────────────────────────────────────────────────────── */
+.card{
+  background:var(--card);border-radius:var(--r2xl);
+  border:1px solid var(--border);
+  padding:3rem 3.5rem;
+  opacity:0;animation:up var(--base) .05s var(--ease) both;
+  text-align:center;
+}
+@media(max-width:560px){.card{padding:2rem 1.5rem;border-radius:var(--rxl)}}
+
+/* ── Icon ─────────────────────────────────────────────────────────────── */
+.icon-wrap{
+  width:64px;height:64px;border-radius:50%;
+  background:rgba(44,95,62,.08);border:1.5px solid rgba(44,95,62,.2);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.75rem;
+  opacity:0;animation:scale var(--slow) .15s var(--ease) both;
+}
+.icon-wrap svg{width:28px;height:28px;stroke:var(--green)}
+
+/* ── Typography ───────────────────────────────────────────────────────── */
+h1{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;color:var(--ink);margin-bottom:.5rem}
+.subtitle{font-size:.9375rem;color:var(--ash);margin-bottom:1.75rem;line-height:1.55}
+
+/* ── Case ID copiable ─────────────────────────────────────────────────── */
+.case-id-wrap{
+  display:flex;align-items:center;justify-content:center;gap:.625rem;
+  background:var(--linen);border-radius:var(--rl);
+  padding:.625rem 1rem .625rem 1.25rem;
+  margin-bottom:2rem;
+  border:1px solid var(--border);
+}
+.case-id-text{
+  font-family:var(--mono);font-size:1rem;font-weight:600;
+  color:var(--ink);letter-spacing:.06em;
+}
+.copy-btn{
+  display:flex;align-items:center;justify-content:center;
+  background:none;border:none;padding:4px;cursor:pointer;
+  color:var(--rust);border-radius:var(--r);
+  transition:opacity var(--fast),transform var(--fast);
+  flex-shrink:0;
+}
+.copy-btn:hover{opacity:.75}
+.copy-btn:active{transform:scale(.88)}
+.copy-btn svg{width:16px;height:16px;stroke:currentColor}
+/* Tick shown briefly after copy */
+.copy-btn .icon-check{display:none}
+.copy-btn.copied .icon-copy{display:none}
+.copy-btn.copied .icon-check{display:block}
+.copy-btn.copied{color:var(--green)}
+
+/* ── What next panel ──────────────────────────────────────────────────── */
+.what-next{
+  background:var(--paper);border-radius:var(--rxl);border:1px solid var(--border);
+  padding:1.25rem 1.5rem;margin-bottom:2rem;text-align:left;
+}
+.what-next-title{
+  font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ash);margin-bottom:.875rem;
+}
+.step{display:flex;gap:.875rem;align-items:flex-start;padding:.5rem 0}
+.step+.step{border-top:1px solid var(--border)}
+.step-num{
+  width:22px;height:22px;border-radius:50%;background:var(--ink);
+  color:var(--cream);font-size:.6875rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.15rem;
+}
+.step-text{font-size:.875rem;color:var(--ash);line-height:1.5}
+.step-text strong{color:var(--ink);font-weight:600}
+
+/* ── Actions ──────────────────────────────────────────────────────────── */
+.actions{display:flex;flex-direction:column;gap:.75rem}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.75rem 1.5rem;border-radius:var(--rpill);
+  font-family:var(--sans);font-size:.9375rem;font-weight:600;
+  cursor:pointer;transition:opacity var(--fast),transform var(--fast);
+  border:none;text-decoration:none;
+}
+.btn:active{transform:scale(.98);opacity:.85}
+.btn-primary{background:var(--ink);color:var(--cream)}
+.btn-secondary{background:transparent;color:var(--ink);border:1.5px solid var(--border)}
+.btn-secondary:hover{border-color:var(--ink)}
+
+/* ── Footer ───────────────────────────────────────────────────────────── */
+.footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;padding:1.5rem 1.75rem;font-size:12px;color:var(--ash)}
+.footer a{color:var(--ash);text-decoration:none}
+.footer a:hover{color:var(--ink)}
+
+/* ── Animations ───────────────────────────────────────────────────────── */
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes scale{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<!-- Isotipo bleeding -->
+<div class="brand-mark" aria-hidden="true"><svg viewBox="-4 -4 198 180" xmlns="http://www.w3.org/2000/svg"><path d="M53.86,0l4.26.29c34,3.27,54.9,36.14,51.17,68.79-1.19,10.39-6.03,20.16-12.53,28.2l5.75,8.64.29.14c6.81-5.67,14.53-10.61,23.19-12.92,23.68-6.3,49.76,8.89,53.71,33.49l.65,5.2v6.06l-.31,3.08c-2.3,17.06-14.39,29.97-31.28,33.26-19.6,3.81-34.52-5.92-46.38-20.39-.92-1.12-2.26-3.32-3.18-4.18-.11-.1-.17-.27-.36-.22-5.09,6.15-10.85,11.61-17.62,15.89-8.12,5.13-17.33,8.52-26.88,9.8l-4.24.45h-6.79c-1.03-.24-2.17-.19-3.23-.31-20.54-2.3-36.5-16.13-39.49-36.9-.23-1.6-.23-3.24-.6-4.81v-2.6h27.15c.13,1.31.14,2.62.33,3.93,1.8,12.32,14.77,14.95,25.25,13.06,8.25-1.48,15.8-5.82,21.64-11.72l8.89-10.18v-.43s-7.38-10.53-7.38-10.53c-12.68,7.29-28.33,11.69-42.85,7.59-10.51-2.96-18.72-10.36-23.24-20.22-13.91-30.3,16.65-60.21,46.95-48.25,9.19,3.63,15.03,9.87,21.08,17.33.61.75,1.25,1.55,1.74,2.38.29.06.34-.14.46-.33,2.08-3.54,2.73-9.27,2.58-13.32-.79-21.3-17.27-38.39-39.39-31.58-7.06,2.17-14.89,8.25-15.19,16.21l-27,1.3C.18,30.32,10.23,16.2,23.26,8.17,31.68,2.99,41.89.32,51.78.15l.35-.15h1.73ZM59.92,92.99l-.07-.42c-5.03-6.29-12.62-18.36-22.21-12.4-7.04,4.38-4.29,14.6,2.94,16.51,6.38,1.68,13.62-.98,19.34-3.69ZM136.14,118.74c-4.94.35-9.98,3.46-13.82,6.4-.6.46-4.55,3.63-4.48,4.01,6.15,8.6,15,22.12,27.54,18.04,9.07-2.95,9.98-15.12,5.06-22.03-2.74-3.86-9.62-6.74-14.3-6.41Z"/></svg></div>
+
+<div class="app">
+  <header class="header">
+    <div class="header-logo">
+      <svg class="logo-svg" viewBox="0 0 1243.09 547.51" aria-label="aura" xmlns="http://www.w3.org/2000/svg"><path d="M394.3,221.59V45.76h47.71v175.83c0,57.93,33.39,92,83.83,92s83.83-34.08,83.83-92V45.76h47.71v175.83c0,74.97-42.94,138.35-131.53,138.35s-131.53-63.38-131.53-138.35Z"/><path d="M735.72,353.34V39.16h43.62v56.57c13.63-33.39,51.79-56.57,94.73-56.57h21.13v48.39h-21.13c-56.57,0-90.64,40.21-90.64,96.09v169.7h-47.71Z"/><path d="M937.69,256.8c0-53.26,43.28-87.22,100.53-87.22h71.91c21.97,0,35.95-13.32,35.95-31.96,0-23.3-25.3-53.26-76.57-53.26-45.27,0-71.91,24.63-84.56,57.26l-36.62-23.97c18.64-44.61,57.92-78.56,121.17-78.56,77.9,0,125.17,50.6,125.17,111.19v195.74h-42.61v-43.94c-9.32,21.31-46.61,51.27-97.87,51.27-70.58,0-116.51-43.28-116.51-96.54ZM1148.08,214.85v-3.99h-109.19c-30.63,0-51.27,19.31-51.27,45.94,0,27.96,23.3,51.27,66.58,51.27,59.26,0,93.88-37.95,93.88-93.21Z"/><path fill="none" stroke="inherit" stroke-miterlimit="10" stroke-width="54" d="M51.16,143.19c-1.97-42.3,34.92-78.41,71.1-91.16,105.71-37.26,192.98,49.53,183.85,157.14-9.1,107.19-191.62,198.16-233.59,89-26.76-69.6,68.59-136.14,133.37-59.37,33.9,40.17,62.67,84.28,92.4,127.16,40.17,55.4,82.51,156.19,166.52,138.64,78.57-16.42,80.22-119.21,28.4-154.62-92.49-63.21-163.19,39.86-220.46,103-78.57,86.61-224.35,71.16-224.35-41.87"/></svg>
+      <div class="logo-sub">creative origin<br>certificate</div>
+    </div>
+    <span class="header-badge">Payment</span>
+  </header>
+
+  <main class="main">
+    <div class="container">
+      <div class="card">
+
+        <div class="icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+
+        <h1 id="heading">Payment confirmed</h1>
+        <p class="subtitle" id="subtitle">Your forensic audit is now underway. Keep your case ID — you'll need it to access your certificate.</p>
+
+        <!-- Case ID copiable — shown only if case_id is in the URL -->
+        <div class="case-id-wrap" id="case-id-wrap" style="display:none">
+          <span class="case-id-text" id="case-id-text"></span>
+          <button class="copy-btn" id="copy-btn" aria-label="Copy case ID">
+            <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- What happens next -->
+        <div class="what-next" id="what-next">
+          <div class="what-next-title" id="wn-title">What happens next</div>
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong id="s1h">Email confirmation</strong> — <span id="s1b">we've sent a receipt and your case ID to the address you provided.</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong id="s2h">Forensic audit begins</strong> — <span id="s2b">our team reviews your submission and the evidence you attached.</span></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong id="s3h">Certificate issued</strong> — <span id="s3b">once verified, your certificate is anchored to Polygon and published at your unique URL.</span></div>
+          </div>
+        </div>
+
+        <div class="actions" id="actions"></div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 AURA</span>
+    <a href="mailto:hello@auracertificate.art">hello@auracertificate.art</a>
+  </footer>
+</div>
+
+<script>
+/* ══ CONFIG ══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  certificateBase: '/certificate',
+};
+
+/* ══ I18N ════════════════════════════════════════════════════════════════ */
+const LANG = (navigator.language || 'en').startsWith('es') ? 'es' : 'en';
+const T = {
+  en: {
+    heading:    'Payment confirmed',
+    subtitle:   "Your forensic audit is now underway. Keep your case ID — you'll need it to access your certificate.",
+    subtitleInst: 'Your case is open. An invitation has been sent to the artist to complete their declaration.',
+    wnTitle:    'What happens next',
+    s1h:'Email confirmation',    s1b:"We've sent a receipt and your case ID to the address you provided.",
+    s2h:'Forensic audit begins', s2b:'Our team reviews your submission and the evidence you attached.',
+    s3h:'Certificate issued',    s3b:'Once verified, your certificate is anchored to Polygon and published at your unique URL.',
+    s3hInst:'Artist declaration',s3bInst:'Once the artist completes their form, the audit begins and the certificate is issued.',
+    viewCert: 'View certificate status',
+    backHome: 'Return to AURA',
+  },
+  es: {
+    heading:    'Pago confirmado',
+    subtitle:   'Tu auditoría forense ha comenzado. Guarda tu número de caso — lo necesitarás para acceder a tu certificado.',
+    subtitleInst: 'Tu caso está abierto. Se ha enviado una invitación al artista para que complete su declaración.',
+    wnTitle:    'Qué ocurre ahora',
+    s1h:'Confirmación por email',       s1b:'Hemos enviado un recibo y tu número de caso a la dirección que indicaste.',
+    s2h:'Comienza la auditoría forense',s2b:'Nuestro equipo revisa tu envío y la evidencia adjunta.',
+    s3h:'Emisión del certificado',      s3b:'Una vez verificado, tu certificado queda anclado en Polygon y publicado en tu URL única.',
+    s3hInst:'Declaración del artista',  s3bInst:'Cuando el artista complete su formulario, comienza la auditoría y se emite el certificado.',
+    viewCert: 'Ver estado del certificado',
+    backHome: 'Volver a AURA',
+  },
+};
+const t = k => T[LANG][k] || T.en[k];
+
+/* ══ Boot — Stripe only redirects here on success, no verification needed ══ */
+function boot() {
+  const params        = new URLSearchParams(location.search);
+  const caseId        = params.get('case_id');
+  const isInstitution = params.get('type') === 'institution';
+
+  // Localise copy
+  document.getElementById('heading').textContent  = t('heading');
+  document.getElementById('subtitle').textContent = isInstitution ? t('subtitleInst') : t('subtitle');
+  document.getElementById('wn-title').textContent = t('wnTitle');
+  document.getElementById('s1h').textContent = t('s1h');
+  document.getElementById('s1b').textContent = t('s1b');
+  document.getElementById('s2h').textContent = t('s2h');
+  document.getElementById('s2b').textContent = t('s2b');
+  document.getElementById('s3h').textContent = isInstitution ? t('s3hInst') : t('s3h');
+  document.getElementById('s3b').textContent = isInstitution ? t('s3bInst') : t('s3b');
+
+  // Case ID pill + copy button
+  if (caseId) {
+    document.getElementById('case-id-text').textContent = caseId;
+    document.getElementById('case-id-wrap').style.display = '';
+
+    const btn = document.getElementById('copy-btn');
+    btn.addEventListener('click', () => {
+      navigator.clipboard.writeText(caseId).then(() => {
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 1800);
+      }).catch(() => {
+        // Fallback for older browsers / insecure contexts
+        const ta = document.createElement('textarea');
+        ta.value = caseId;
+        ta.style.position = 'fixed';
+        ta.style.opacity  = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 1800);
+      });
+    });
+  }
+
+  // CTA
+  const actions  = document.getElementById('actions');
+  const certUrl  = caseId ? `${CONFIG.certificateBase}/${caseId}` : null;
+  actions.innerHTML = certUrl
+    ? `<a class="btn btn-primary" href="${certUrl}">${t('viewCert')}</a>`
+    : `<a class="btn btn-secondary" href="/">${t('backHome')}</a>`;
+}
+
+boot();
+</script>
+</body>
+</html>
