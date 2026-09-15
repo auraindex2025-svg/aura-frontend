@@ -549,17 +549,21 @@ async function doVerify(){
   var pathId=window.location.pathname.split('/').pop();
   var auto=(pathId&&pathId.startsWith('AURA-'))?pathId:null;
   if(auto){
-    var varPart=auto.replace(/^AURA-/i,'').replace(/^[0-9]{4}-/,'');
-    var parts=varPart.split('-');
-    if(parts.length>=3){
-      document.getElementById('seg0').value=parts[0]||'';
-      document.getElementById('seg1').value=parts[1]||'';
-      document.getElementById('seg2').value=parts[2]||'';
-    } else if(parts.length===2){
-      document.getElementById('seg0').value=parts[0]||'';
-      document.getElementById('seg1').value=parts[1]||'';
+    // Extraer las partes del case_id completo: AURA-YYYY-XXXX-XXXX
+    var allParts=auto.replace(/^AURA-/i,'').split('-');
+    if(allParts.length>=3){
+      // Formato completo: YYYY-XXXX-XXXX → rellenar los 3 campos
+      document.getElementById('seg0').value=allParts[0]||'';
+      document.getElementById('seg1').value=allParts[1]||'';
+      document.getElementById('seg2').value=allParts[2]||'';
+    } else if(allParts.length===2){
+      // Sin año: XXXX-XXXX → usar año actual en seg0
+      document.getElementById('seg0').value=String(new Date().getFullYear());
+      document.getElementById('seg1').value=allParts[0]||'';
+      document.getElementById('seg2').value=allParts[1]||'';
     } else {
-      var v=varPart.replace(/[^A-Z0-9]/gi,'').toUpperCase();
+      // Fallback: cadena sin guiones
+      var v=allParts[0].replace(/[^A-Z0-9]/gi,'').toUpperCase();
       document.getElementById('seg0').value=v.substring(0,4);
       document.getElementById('seg1').value=v.substring(4,8);
       document.getElementById('seg2').value=v.substring(8,12);
